@@ -2,18 +2,17 @@
 #include <limits>
 using namespace std;
 
-// ===== Define 9 Colors =====
-#define reset "\033[0m"
-#define black "\033[30m"
-#define red "\033[31m"
-#define green "\033[32m"
-#define yellow "\033[33m"
-#define blue "\033[34m"
-#define purple "\033[35m"
-#define cyan "\033[36m"
-#define white "\033[37m"
+#define reset "\033[1;0m"
+#define black "\033[1;30m"
+#define red "\033[1;31m"
+#define green "\033[1;32m"
+#define yellow "\033[1;33m"
+#define blue "\033[1;34m"
+#define purple "\033[1;35m"
+#define cyan "\033[1;36m"
+#define white "\033[1;37m"
 
-const int MAX_SIZE = 13;
+const int MAX_SIZE = 30;
 int arr[MAX_SIZE] = {
     10,
     11,
@@ -25,11 +24,11 @@ int arr[MAX_SIZE] = {
     42,
     56,
     71};
-
 int size = 10;
 int newArr[MAX_SIZE];
-int pos, elementInsert, option, insertArr;
-int attempts;
+int pos, option, insertArr, newElement;
+int elementToInsert, elementToUpdate, elementToDelete;
+int attempts = 20;
 
 void display()
 {
@@ -80,47 +79,68 @@ void displayArray()
 |__|__ _____ _____ _|_|_ _____ ____|___/__ _____ _____ _____ _____|___/_ __|__|
 |_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|)"
          << endl;
-    cout << "|     |     |     |" << endl;
-    cout << "|   " << red << "Index" << reset << "   |  =  |";
+
+    cout << R"(|  _  |
+|_____| )"
+         << green << "~> [Index]." << reset << red << "element" << reset << endl;
     for (int i = 0; i < ::size; i++)
     {
-        cout << green << " [" << i << "]>" <<arr[i] << reset << "  ";
+        cout << R"(|  _  |
+|_____|)" << green
+             << " [" << i << "]. " << reset << red << arr[i] << reset << "  " << endl;
     }
-    cout << endl;
-    cout << "|_____|_____|_____|___________________________________________________________" << endl;
-    cout << "|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|" << endl;
-    
     pressEnter();
     cout << endl;
 }
 
-void insertArray()
+bool insertArray()
 {
     system("clear");
-    do
-    {
+
+    cout << R"(
+ _____ _____ _____ _____ _____ _____ _____ _____ _____ _____ _____ _____ 
+|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|
+| _|   |_ _|_ __  ___  ___ _ __| |_     / \   _ __ _ __ __ _ _   _   |_ |   
+| |     | || '_ \/ __|/ _ \ '__| __|   / _ \ | '__| '__/ _` | | | |   | |   
+| |     | || | | \__ \  __/ |  | |_   / ___ \| |  | | | (_| | |_| |   | |   
+| |    |___|_| |_|___/\___|_|   \__| /_/   \_\_|  |_|  \__,_|\__, |   | |   
+|__|__ _____ _____ _____ _____ _____ _____ _____ _____ _____ ___/_|__|__| 
+|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|)"
+         << endl;
 
     cout << R"(|  _  |
-|_____| ~> Enter position = )";
+|_____| )"
+         << green << "~> [Index]." << reset << red << "element" << reset << endl;
+    for (int i = 0; i < ::size; i++)
+    {
+        cout << R"(|  _  |
+|_____|)" << green
+             << " [" << i << "]. " << reset << red << arr[i] << reset << "  " << endl;
+    }
+    cout << R"(|  _  |
+|_____| ~> Enter Index to insert = )";
     cin >> pos;
     cout << R"(|  _  |
-|_____| ~> Enter element to insert = )";
-    cin >> elementInsert;
+|_____| ~> Enter new element to insert = )";
+    cin >> elementToInsert;
 
-    if (pos < 0 || pos > ::size) {
+    if (pos < 0 || pos > ::size)
+    {
 
         cout << R"(|  _  |
-|_____| )" << red << "~> . Invalid position! "<< reset << endl;
+|_____| )" << red
+             << "~> . Invalid position! " << reset << endl;
 
         pressEnter();
-        return;
+        return false;
     }
 
     for (int i = 0; i < pos; i++)
     {
         newArr[i] = arr[i];
     }
-    newArr[pos] = elementInsert;
+    newArr[pos] = elementToInsert;
+
     for (int i = pos; i < ::size; i++)
     {
         newArr[i + 1] = arr[i];
@@ -133,33 +153,89 @@ void insertArray()
     ::size++;
 
     cout << R"(|  _  |
-|_____| )" << green << "~> . Element inserted successfully!" << reset << endl;
+|_____| )"
+         << green << "~> Element inserted successfully!" << reset << endl;
 
-    cout << "You have " << attempts << " attemp(s) left" << endl;
-        if (attempts == 0)
-        {
-            return;
-        }
-
+    if (attempts == 0)
+    {
+        return false;
+    }
     attempts--;
-    
+
+    cout << R"(|  _  |
+|_____| )"
+         << "~> Element can put only 30 element." << endl;
+
+    cout << R"(|  _  |
+|_____| )"
+         << red << "~> You have " << attempts << " attempt(s) left !!!" << reset << endl;
+
     pressEnter();
 
-    }while(true);
-
-    
     cout << endl;
+
+    return false;
 }
 
-void updateArray(){
+void updateArray()
+{
+    cout << R"(|  _  |
+|_____| ~> Enter element to update = )";
+    cin >> elementToUpdate;
+    cout << R"(|  _  |
+|_____| ~> Enter new element = )";
+    cin >> newElement;
 
+    for (int i = 0; i < ::size; i++)
+    {
+        if (arr[i] == elementToUpdate)
+        {
+            arr[i] = newElement;
+            pressEnter();
+            break;
+        }
+    }
 }
 
-void deleteArray(){}
+void deleteArray()
+{
+    cout << R"(|  _  |
+|_____| ~> Enter element to update = )";
+    cin >> newElement;
+    cout << R"(|  _  |
+|_____| ~> Enter new element = )";
+    cin >> elementToUpdate;
+    cout << R"(|  _  |
+|_____| )"
+         << green << "~> [Index]." << reset << red << "element" << reset << endl;
+    for (int i = 0; i < ::size; i++)
+    {
+        cout << R"(|  _  |
+|_____|)" << green
+             << " [" << i << "]. " << reset << red << arr[i] << reset << "  " << endl;
+    }
 
-void sortArray(){}
+    for (int i = 0; i < ::size; i++)
+    {
+        if (arr[i] == elementToDelete)
+        {
+            for (int j = i; j < ::size; j++)
+            {
+                arr[j] = arr[j + 1];
+            }
+            ::size--;
+        }
+    }
 
-void reverseArray(){}
+    for (int i = 0; i < ::size; i++)
+    {
+        cout << arr[i] << " ";
+    }
+}
+
+void sortArray() {}
+
+void reverseArray() {}
 
 int main()
 {
@@ -179,31 +255,43 @@ int main()
             cout << R"(|  _  |
 |_____| )" << green
                  << "~> Exit program. " << reset << endl;
-            cout<<endl;
+            cout << endl;
             return 0.0;
+        }
+
+        if (option < 0 || option > 6)
+        {
+            cout << R"(|  _  |
+|_____| )" << red << "~> Invalid options put 0 - 6 "
+                 << reset << endl;
+            pressEnter();
         }
 
         switch (option)
         {
-
         case 1:
-        {
             displayArray();
             break;
-        }
 
-        case 2:{
+        case 2:
             insertArray();
             break;
-        }
 
         case 3:
+            updateArray();
+            break;
 
         case 4:
+            deleteArray();
+            break;
 
         case 5:
+            sortArray();
+            break;
 
         case 6:
+            reverseArray();
+            break;
 
         default:
             break;
