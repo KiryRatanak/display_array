@@ -179,11 +179,20 @@ bool insertArray()
 
 void updateArray()
 {
+    system("clear");
     cout << R"(|  _  |
-|_____| ~> Enter element to update = )";
+|_____| )" << green << "~> [Index]." << reset << red << "element" << reset << endl;
+    for (int i = 0; i < ::size; i++)
+    {
+        cout << R"(|  _  |
+|_____|)" << green << " [" << i << "]. " << reset << red << arr[i] << reset << "  " << endl;
+    }
+
+    cout << R"(|  _  |
+|_____| ~> Enter Element to update = )";
     cin >> elementToUpdate;
     cout << R"(|  _  |
-|_____| ~> Enter new element = )";
+|_____| ~> Enter new element for update = )";
     cin >> newElement;
 
     for (int i = 0; i < ::size; i++)
@@ -199,21 +208,18 @@ void updateArray()
 
 void deleteArray()
 {
+    system("clear");
     cout << R"(|  _  |
-|_____| ~> Enter element to update = )";
-    cin >> newElement;
-    cout << R"(|  _  |
-|_____| ~> Enter new element = )";
-    cin >> elementToUpdate;
-    cout << R"(|  _  |
-|_____| )"
-         << green << "~> [Index]." << reset << red << "element" << reset << endl;
+|_____| )" << green << "~> [Index]." << reset << red << "element" << reset << endl;
     for (int i = 0; i < ::size; i++)
     {
-        cout << R"(|  _  |
-|_____|)" << green
-             << " [" << i << "]. " << reset << red << arr[i] << reset << "  " << endl;
+    cout << R"(|  _  |
+|_____|)" << green << " [" << i << "]. " << reset << red << arr[i] << reset << "  " << endl;
     }
+
+    cout << R"(|  _  |
+|_____| ~> Enter element to delete = )";
+    cin >> elementToDelete;
 
     for (int i = 0; i < ::size; i++)
     {
@@ -227,10 +233,8 @@ void deleteArray()
         }
     }
 
-    for (int i = 0; i < ::size; i++)
-    {
-        cout << arr[i] << " ";
-    }
+    pressEnter();
+
 }
 
 void sortArray() {}
