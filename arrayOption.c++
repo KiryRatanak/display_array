@@ -231,33 +231,28 @@ void deleteArray()
     cout << blue << "|  _  |\n|_____| " << white << "~> Enter element to delete = ";
     cin >> elementToDelete;
 
-    for (int i = 0; i < ::size; i++)
-    {
-        if (arr[i] == elementToDelete)
-        {
-            for (int j = i; j < ::size; j++)
-            {
-                arr[j] = arr[j + 1];
-            }
-            ::size--;
-        }
-    }
-    
     bool found = false;
     for (int i = 0; i < ::size; i++)
     {
         if (arr[i] == elementToDelete)
         {
-            arr[i] = newElement;
-            found = false;
-            cout << blue << "|  _  |\n|_____| " << red << "~> Element not found..!" << reset << endl;            
+            for (int j = i; j < ::size - 1; j++)
+            {
+                arr[j] = arr[j + 1];
+            }
+            ::size--;
+            found = true;
             break;
         }
     }
 
     if (!found)
     {
-        cout << blue << "|  _  |\n|_____| " << green << "~> Element deleted successfully..!" << reset << endl;        
+        cout << blue << "|  _  |\n|_____| " << red << "~> Element not found..!" << reset << endl;
+    }
+    else
+    {
+        cout << blue << "|  _  |\n|_____| " << green << "~> Element deleted successfully..!" << reset << endl;
     }
 
     pressEnter();
